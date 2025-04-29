@@ -23,7 +23,7 @@ include_directories(
 add_executable(MyCrowProject src/main.cpp)
 
 # Link library
-target_link_libraries(MyCrowProject PRIVATE ws2_32)
+target_link_libraries(MyCrowProject PRIVATE ws2_32 mswsock)
 
 # Untuk Visual Studio (jika digunakan)
 if(MSVC)

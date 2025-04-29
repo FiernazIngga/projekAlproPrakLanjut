@@ -1,7 +1,9 @@
 #include "crow.h"
+#include <windows.h>
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <filesystem>
 #include <string>
 #include <thread>
 #include <asio.hpp>
@@ -129,19 +131,28 @@ struct Pengumuman
     }
 } pengumuman[maksPengumuman];
 
-
-
-
-
-
-string bacaFile(const string& path) {
-    ifstream file(path);
-    if (!file) return "File tidak ditemukan";
-    
-    ostringstream ss;
-    ss << file.rdbuf();
-    return ss.str();
+// Cek File
+string bacaFile(const string& filepath) {
+    ifstream file(filepath);
+    if (!file.is_open()) {
+        return "Gagal membaca file: " + filepath;
+    }
+    stringstream buffer;
+    buffer << file.rdbuf();
+    return buffer.str();
 }
+
+string getExecutablePath() {
+    char buffer[MAX_PATH];
+    GetModuleFileNameA(NULL, buffer, MAX_PATH);
+    string path(buffer);
+    return path.substr(0, path.find_last_of("\\/"));
+}
+
+bool fileExists(const string& path) {
+    return filesystem::exists(path);
+}
+// Cek File Selesai
 
 int cariKendaraan(string platDiCari){
     int i = 0;

@@ -1,20 +1,33 @@
 #include "function.h"
 
+string cariBasePath() {
+    string exePath = getExecutablePath();
+    string base = exePath;
+    for (int i = 0; i < 10; ++i) {
+        if (fileExists(base + "/public/templates/home.html")) {
+            return base;
+        }
+        base += "/..";
+    }
+    return "File tidak ditemukan.";
+};
+
 int main() {
     SimpleApp app;
+    string basePath = cariBasePath();
 
-    CROW_ROUTE(app, "/")([](){ return response(bacaFile("D:/Codingku/CobaCrow/public/templates/home.html"));});
-    CROW_ROUTE(app, "/kendaraanMasuk")([](){return response( bacaFile("D:/Codingku/CobaCrow/public/templates/kendaraanMasuk.html")); });
-    CROW_ROUTE(app, "/cekKendaraan")([](){ return response(bacaFile("D:/Codingku/CobaCrow/public/templates/cekKendaraan.html")); });
-    CROW_ROUTE(app, "/cariKendaraan")([](){ return response(bacaFile("D:/Codingku/CobaCrow/public/templates/cariKendaraan.html")); });
-    CROW_ROUTE(app, "/cariAsc")([](){ return response(bacaFile("D:/Codingku/CobaCrow/public/templates/cariAsc.html")); });
-    CROW_ROUTE(app, "/cariDesc")([](){ return response(bacaFile("D:/Codingku/CobaCrow/public/templates/cariDesc.html")); });
-    CROW_ROUTE(app, "/pengumuman")([](){ return response(bacaFile("D:/Codingku/CobaCrow/public/templates/pengumuman.html")); });
-    CROW_ROUTE(app, "/isiPengumuman")([](){ return response(bacaFile("D:/Codingku/CobaCrow/public/templates/isiPengumuman.html")); });
-    CROW_ROUTE(app, "/editPengumuman")([](){ return response(bacaFile("D:/Codingku/CobaCrow/public/templates/editPengumuman.html")); });
-    CROW_ROUTE(app, "/yourTickets")([](){ return response(bacaFile("D:/Codingku/CobaCrow/public/client/yourTickets.html")); });
-    CROW_ROUTE(app, "/pengumumanUser")([](){ return response(bacaFile("D:/Codingku/CobaCrow/public/client/pengumumanUser.html")); });
-    CROW_ROUTE(app, "/kendaraanTidakDitemukan")([](){ return response(bacaFile("D:/Codingku/CobaCrow/public/client/kendaraanTidakDitemukan.html")); });
+    CROW_ROUTE(app, "/")([basePath](){ return response(bacaFile(basePath + "/public/templates/home.html"));});
+    CROW_ROUTE(app, "/kendaraanMasuk")([basePath](){return response( bacaFile(basePath + "/public/templates/kendaraanMasuk.html")); });
+    CROW_ROUTE(app, "/cekKendaraan")([basePath](){ return response(bacaFile(basePath + "/public/templates/cekKendaraan.html")); });
+    CROW_ROUTE(app, "/cariKendaraan")([basePath](){ return response(bacaFile(basePath + "/public/templates/cariKendaraan.html")); });
+    CROW_ROUTE(app, "/cariAsc")([basePath](){ return response(bacaFile(basePath + "/public/templates/cariAsc.html")); });
+    CROW_ROUTE(app, "/cariDesc")([basePath](){ return response(bacaFile(basePath + "/public/templates/cariDesc.html")); });
+    CROW_ROUTE(app, "/pengumuman")([basePath](){ return response(bacaFile(basePath + "/public/templates/pengumuman.html")); });
+    CROW_ROUTE(app, "/isiPengumuman")([basePath](){ return response(bacaFile(basePath + "/public/templates/isiPengumuman.html")); });
+    CROW_ROUTE(app, "/editPengumuman")([basePath](){ return response(bacaFile(basePath + "/public/templates/editPengumuman.html")); });
+    CROW_ROUTE(app, "/yourTickets")([basePath](){ return response(bacaFile(basePath + "/public/client/yourTickets.html")); });
+    CROW_ROUTE(app, "/pengumumanUser")([basePath](){ return response(bacaFile(basePath + "/public/client/pengumumanUser.html")); });
+    CROW_ROUTE(app, "/kendaraanTidakDitemukan")([basePath](){ return response(bacaFile(basePath + "/public/client/kendaraanTidakDitemukan.html")); });
     CROW_ROUTE(app, "/dataParkirUser").methods(HTTPMethod::POST)([](const request& req) { return kendaraanMasuk(req); });
     CROW_ROUTE(app, "/lihatSemuaKendaraan").methods(HTTPMethod::GET)([]() { return kumpulanData(); });
     CROW_ROUTE(app, "/lihatAsc").methods(HTTPMethod::GET)([]() { return kumpulkanDataAsc(); });

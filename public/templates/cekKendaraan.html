@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Kendaraan</title>
+    <!-- <link rel="stylesheet" href="dasbord.css"> -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Spicy+Rice&display=swap');
+
+        * {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #dashboard {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .navbar {
+            width: 0%;
+            height: 100%;
+            background-color: #d1d1e9;
+            transition: ease-in-out 0.6s;
+            overflow: hidden;
+        }
+
+        .navbar.open {
+            width: 20%;
+        }
+
+        .hamburger {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1em;
+            cursor: pointer;
+        }
+
+        .affanDasbord {
+            color: #2b2c34;
+            white-space: nowrap;
+            padding: 1em;
+            font-size: 1.2em;
+            transition: all 0.5s;
+        }
+
+        .isi {
+            width: 100%;
+            height: 100%;
+        }
+
+        .burgerNav {
+            display: flex;
+            padding: 2px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            flex-direction: column;
+            width: 35px;
+            height: 35px;
+            margin: 10px;
+            cursor: pointer;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .hatas, .htengah, .hbawah {
+            width: 90%;
+            margin: 2.5px;
+            height: 3px;
+            background-color: #6246ea;
+            transition: all .3s;
+            transform-origin: left;
+        }
+
+        .burgerNav.active .hatas {
+            transform: rotate(33deg);
+            width: 100%;
+        }
+        .burgerNav.active .htengah {
+            opacity: 0;
+        }
+        .burgerNav.active .hbawah {
+            transform: rotate(-33deg);
+            width: 100%;
+        }
+
+        .menuParkir {
+            list-style: none;
+            padding: 0 1em;
+            display: block;
+        }
+
+        .menuParkir.show {
+            display: block;
+        }
+
+        .menuParkir li {
+            margin: 1em 0;
+        }
+
+        .menuParkir li:nth-child(3) a {
+            text-decoration: none;
+            color: #fffffe;
+            font-size: 1em;
+            display: block;
+            white-space: nowrap;
+            padding: 10px;
+            background-color: #6246ea;
+            border-radius: 5px;
+        }
+
+        .menuParkir li:not(:nth-child(3)) a {
+            text-decoration: none;
+            color: #2b2c34;
+            font-size: 1em;
+            display: block;
+            white-space: nowrap;
+            padding: 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .menuParkir li:not(:nth-child(3)) a:hover {
+            background: #6246ea;
+            color: #fffffe;
+        }
+
+        .isi h1 {
+            text-align: center;
+            margin-top: 2em;
+        }
+
+        .containerIsi {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .containerIsi button:nth-child(1){
+            margin: 2em 5em;
+            width: 13em;
+            height: 3em;
+            border-radius: 5px;
+            background-color: #6246ea;
+            border: 2px solid #6246ea;
+            color: #fffffe;
+            font-weight: 500;
+        }
+
+        .containerIsi button:nth-child(2) {
+            margin: 2em 5em;
+            width: 13em;
+            height: 3em;
+            border-radius: 5px;
+            background-color: transparent;
+            border: 2px solid #6246ea;
+            color: #6246ea;
+            font-weight: 500;
+            transition: all 0.5s;
+        }
+
+        .containerIsi button:nth-child(1):hover, .containerIsi button:nth-child(2):hover {
+            background-color: #6246ea;
+            cursor: pointer;
+            color: #fffffe;
+        }
+        .containerIsi button:nth-child(1):focus, .containerIsi button:nth-child(2):focus {
+            background-color: #6246ea;
+            color: #fffffe;
+        }
+
+        .containerCariSemuaKendaraan {
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .containerCariSemuaKendaraan h2 {
+            color: #333;
+        }
+
+        .containerCariSemuaKendaraan table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .containerCariSemuaKendaraan th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .containerCariSemuaKendaraan th {
+            background-color: #6246ea;
+            color: white;
+        }
+
+        .containerCariSemuaKendaraan tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .containerCariSemuaKendaraan tr:hover {
+            background-color: #ddd;
+        }
+
+        .sorting-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .sorting-buttons button:not(:nth-child(3)) {
+            background-color: transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: black;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .sorting-buttons button:nth-child(3) {
+            background-color: black;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #fffffe;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .sorting-buttons button:nth-child(1):hover, .sorting-buttons button:nth-child(2):hover {
+            background-color: #333;
+            color: #fffffe;
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                width: 90%;
+                padding: 1.5em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+
+        @media screen and (max-width: 1424px) {
+            .navbar.open {
+                width: 500px;
+            }
+        }
+
+        @media screen and (max-width: 808px) {
+            .textIsi h1 {
+                font-size: 1em;
+            }
+
+            .menuParkir a {
+                font-size: 0.9em;
+            }
+
+            .affanDasbord {
+                font-size: 1em;
+            }
+
+            .textIsi {
+                height: 10em;
+            }
+            .containerCariSemuaKendaraan {
+                display: none;
+            }
+        }
+        .tiket {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(43, 44, 52, 0.9); 
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .containerTiket {
+            background-color: #fffffe;
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            border-radius: 15px;
+            padding: 2em;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .isiTiket1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2em;
+            align-items: center;
+            margin-bottom: 1.5em;
+        }
+        
+        .iniQr {
+            border: 3px solid #6246ea;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: white;
+        }
+        
+        .qr-title {
+            font-size: 1.2em;
+            font-weight: 500;
+            color: #2b2c34;
+        }
+        
+        .containerIsiTiket {
+            display: flex;
+            gap: 1em;
+        }
+        
+        .judulKendaraan, .titikTitik, .isiKendaraan {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8em;
+        }
+        
+        .judulKendaraan h2 {
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #2b2c34;
+        }
+        
+        .titikTitik h2 {
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #6246ea;
+        }
+        
+        .isiKendaraan h2 {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #6246ea;
+        }
+        
+        .isiTiket2 {
+            margin-top: 1em;
+            padding: 1em;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .catatan {
+            font-size: 0.9em;
+            font-weight: 400;
+            color: #2b2c34;
+            line-height: 1.4;
+        }
+        .buttonKembali, .buttonWeb {
+            width: 6em;
+            cursor: pointer;
+            height: 2.7em;
+            border-radius: 10px;
+            background-color: #6246ea;
+            color: #fffffe;
+            transition: all 0.1s ease-in-out;
+            border: 1.5px solid #fffffe;
+        }
+        .buttonKembali:hover, .buttonWeb:hover {
+            background-color: #fffffe;
+            color: #6246ea;
+            border: 1.5px solid #6246ea;
+        }
+    </style>
+</head>
+<body>
+    <section id="dashboard">
+        <div class="navbar">
+            <h1 class="affanDasbord">Affan Jaya's Mall</h1>
+            <div class="isianDabsord">
+                <ul class="menuParkir">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/kendaraanMasuk">Kendaraan Masuk</a></li>
+                    <li><a href="/cekKendaraan">Cek Kendaraan</a></li>
+                    <li><a href="#">Kendaraan Keluar</a></li>
+                    <li><a href="/pengumuman">Menu Pengumuman</a></li>
+                    <li><a href="#">Keluar Program</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="isi">
+            <div class="burgerNav" id="hamburgerMenu">
+                <div class="hatas"></div>
+                <div class="htengah"></div>
+                <div class="hbawah"></div>
+            </div>
+            <h1>Cek Kendaraan</h1>
+            <div class="containerIsi">
+                <div class="containerButton">
+                    <button type="button" id="cekSemmua" onclick="window.location.href='/cekKendaraan'">Lihat Semua</button>
+                    <button type="button" id="cariKendaraan" onclick="window.location.href='/cariKendaraan'">Cari Kendaraan</button>
+                </div>
+            </div>
+
+            <div class="containerCariSemuaKendaraan">
+                <h2>Data Kendaraan Parkir</h2>
+                
+                <div class="sorting-buttons">
+                    <button onclick="window.location.href='/cariAsc'">Sorting Naik</button>
+                    <button onclick="window.location.href='/cariDesc'">Sorting Turun</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id Kendaraan</th>
+                            <th>Tipe Kendaraan</th>
+                            <th>Plat Kendaraan</th>
+                            <th>Biaya Parkir</th>
+                            <th>Denda Parkir</th>
+                            <th>Waktu Masuk</th>
+                            <th>Waktu Keluar</th>
+                            <th>Lihat Karcis</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data-kendaraan">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="tiket">
+        <div class="containerTiket">
+            <button class="buttonKembali" onclick="document.querySelector('.tiket').style.display = 'none'">Kembali</button>
+            <div class="isiTiket1">
+                
+            </div>
+            <div class="isiTiket2">
+                <h2 class="catatan">Catatan Penting: Scan QR diatas untuk mengantisipasi kehilangan Karcis Parkir dan untuk Info Penting Lainnya!!!!</h2>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const navbar = document.querySelector('.navbar');
+        const hamburger = document.querySelector('#hamburgerMenu');
+        const burgerNav = document.querySelector('.burgerNav');
+        const button = document.querySelector('#button');
+        let tutup = 1;
+        
+        hamburger.addEventListener('click', () => {
+            tutup = !tutup;
+            navbar.classList.toggle('open');
+            burgerNav.classList.toggle('active');
+        });
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            const tableBody = document.getElementById("data-kendaraan");
+            const jendelaTiket = document.querySelector('.tiket');
+            function fetchDataKendaraan() {
+                fetch('/lihatSemuaKendaraan')
+                .then(response => response.json()) 
+                .then(data => {
+                    tableBody.innerHTML = "";
+                    if (data.cekBol) {
+                        tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="8" style="text-align: center; color: red;">${data.message}</td>
+                            </tr>
+                            `;
+                            return;
+                        }
+                        data.data.forEach(kendaraan => {
+                            const row = document.createElement("tr");
+                            row.innerHTML = `
+                            <td>${kendaraan.id_kendaraan}</td>
+                            <td>${kendaraan.tipe_kendaraan}</td>
+                            <td>${kendaraan.plat_kendaraan}</td>
+                            <td>Rp ${kendaraan.biaya_parkir}</td>
+                            <td>Rp ${kendaraan.denda_parkir}</td>
+                            <td>${kendaraan.waktu_masuk}</td>
+                            <td>${kendaraan.waktu_keluar || '-'}</td>
+                            <td><button type="button" class="buttonWeb" data-id=${kendaraan.id_kendaraan}>Cek</button></td>
+                            `;
+                            tableBody.appendChild(row);
+                        });
+                        document.querySelectorAll('.buttonWeb').forEach(button => {
+                            button.addEventListener('click', function() {
+                                const id = button.getAttribute('data-id');
+                                fetch(`/isiTiket/${id}`)
+                                .then(respon => respon.json())
+                                .then(res => {
+                                    console.log(res, "ini respon");
+                                    if (res.cekBol) {
+                                        console.log(res, "ini data respon")
+                                        jendelaTiket.style.display = 'flex';
+                                        document.querySelector('.isiTiket1').innerHTML = `
+                                            <div class="iniQr" onclick="window.open('/yourTickets?id=${res.idKendaraan}', '_blank')">
+                                                <h1 class="qr-title">Scan Here</h1>
+                                            </div>
+                                            <div class="containerIsiTiket">
+                                                <div class="judulKendaraan">
+                                                    <h2>Tipe Kendaraan</h2>
+                                                    <h2>Plat Kendaraan</h2>
+                                                    <h2>Waktu Masuk</h2>
+                                                </div>
+                                                <div class="titikTitik">
+                                                    <h2>:</h2>
+                                                    <h2>:</h2>
+                                                    <h2>:</h2>
+                                                </div>
+                                                <div class="isiKendaraan">
+                                                    <h2 class="tipeKendaraan">${res.tipeKendaraan}</h2>
+                                                    <h2 class="platKendaraan">${res.platKendaraan}</h2>
+                                                    <h2 class="waktuMasuk">${res.waktuMasuk}</h2>
+                                                </div>
+                                            </div>
+                                        `;
+                                    } else {
+                                        alert('Terjadi Kesalahan');
+                                    }
+                                });
+                            });
+                        });
+                    })
+                    .catch(error => console.error("Gagal mengambil data:", error));
+                }
+                fetchDataKendaraan();
+            });
+    </script>
+</body>
+</html>
+
+

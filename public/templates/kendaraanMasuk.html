@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk Kendaraan</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Spicy+Rice&display=swap');
+
+        * {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #dashboard {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .navbar {
+            width: 0%;
+            height: 100%;
+            background-color: #d1d1e9;
+            transition: ease-in-out 0.6s;
+            overflow: hidden;
+        }
+
+        .navbar.open {
+            width: 20%;
+        }
+
+        .affanDasbord {
+            color: #2b2c34;
+            white-space: nowrap;
+            padding: 1em;
+            font-size: 1.2em;
+            transition: all 0.5s;
+        }
+
+        .isi {
+            width: 100%;
+            height: 100%;
+        }
+
+        .burgerNav {
+            display: flex;
+            padding: 2px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            flex-direction: column;
+            width: 35px;
+            margin: 10px;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        .hatas, .htengah, .hbawah {
+            width: 90%;
+            margin: 2.5px;
+            height: 3px;
+            background-color: #6246ea;
+            transition: all .3s;
+            transform-origin: left;
+        }
+
+        .burgerNav.active .hatas {
+            transform: rotate(33deg);
+            width: 100%;
+        }
+        .burgerNav.active .htengah {
+            opacity: 0;
+        }
+        .burgerNav.active .hbawah {
+            transform: rotate(-33deg);
+            width: 100%;
+        }
+
+        .menuParkir {
+            list-style: none;
+            padding: 0 1em;
+            display: block;
+        }
+
+        .menuParkir.show {
+            display: block;
+        }
+
+        .menuParkir li {
+            margin: 1em 0;
+        }
+
+        .menuParkir li:nth-child(2) a {
+            text-decoration: none;
+            color: #fffffe;
+            font-size: 1em;
+            display: block;
+            white-space: nowrap;
+            padding: 10px;
+            background-color: #6246ea;
+            border-radius: 5px;
+        }
+
+        .menuParkir li:not(:nth-child(2)) a {
+            text-decoration: none;
+            color: #2b2c34;
+            font-size: 1em;
+            display: block;
+            white-space: nowrap;
+            padding: 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .menuParkir li:not(:nth-child(2)) a:hover {
+            background: #6246ea;
+            color: #fffffe;
+        }
+
+        .containerIsi {
+            width: auto;
+            height: 100%;
+            display: flex;
+            margin-top: -7em;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 2em;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 1em;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin: 0.5em 0 0.2em;
+            font-weight: 600;
+            color: #555;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            outline: none;
+            transition: border 0.3s ease-in-out;
+        }
+
+        select:focus, input:focus {
+            border: 1px solid #6246ea;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #6246ea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: #4b3bbd;
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                width: 90%;
+                padding: 1.5em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+
+        @media screen and (max-width: 1424px) {
+            .navbar.open {
+                width: 500px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .textIsi h1 {
+                font-size: 1em;
+            }
+
+            .menuParkir a {
+                font-size: 0.9em;
+            }
+
+            .affanDasbord {
+                font-size: 1em;
+            }
+
+            .textIsi {
+                height: 10em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section id="dashboard">
+        <div class="navbar">
+            <h1 class="affanDasbord">Affan Jaya's Mall</h1>
+            <div class="isianDabsord">
+                <ul class="menuParkir">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/kendaraanMasuk">Kendaraan Masuk</a></li>
+                    <li><a href="/cekKendaraan">Cek Kendaraan</a></li>
+                    <li><a href="#">Kendaraan Keluar</a></li>
+                    <li><a href="/pengumuman">Menu Pengumuman</a></li>
+                    <li><a href="#">Keluar Program</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="isi">
+            <div class="burgerNav" id="hamburgerMenu">
+                <div class="hatas"></div>
+                <div class="htengah"></div>
+                <div class="hbawah"></div>
+            </div>
+            <div class="containerIsi">
+                <div class="container">
+                    <h2>Pendaftaran Kendaraan</h2>
+            
+                    <label for="tipeKendaraan">Pilih Tipe Kendaraan:</label>
+                    <select id="tipeKendaraan">
+                        <option value="" disabled selected>-- Pilih Tipe Kendaraan --</option>
+                        <option value="1">Kendaraan Roda Dua</option>
+                        <option value="2">Kendaraan Roda Empat</option>
+                        <option value="3">Roda Empat Keatas</option>
+                    </select>
+
+                    <label for="gerbangMasuk">Pilih Gerbang Masuk Kendaraan:</label>
+                    <select id="gerbangMasuk">
+                        <option value="" disabled selected>-- Pilih Gerbang Masuk --</option>
+                        <option value="1">Gerbang A</option>
+                        <option value="2">Gerbang B</option>
+                        <option value="3">Gerbang C (Khusus Roda 2)</option>
+                    </select>
+            
+                    <label for="platKendaraan">Masukkan Plat Nomor Kendaraan:</label>
+                    <input type="text" id="platKendaraan" placeholder="Contoh: B 1234 ABC">
+            
+                    <button id="button">Submit</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const navbar = document.querySelector('.navbar');
+        const hamburger = document.querySelector('#hamburgerMenu');
+        const burgerNav = document.querySelector('.burgerNav');
+        const button = document.querySelector('#button');
+        let tutup = 0;
+
+        hamburger.addEventListener('click', () => {
+            tutup = !tutup;
+            navbar.classList.toggle('open');
+            burgerNav.classList.toggle('active');
+        });
+
+        async function kirimDataParkir(dataParkir) {
+            try {
+                let respons = await fetch('/dataParkirUser', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(dataParkir)
+                })
+
+                const responData = await respons.json();
+                if (responData.kendaraanRodaAtas4) {
+                    alert(`${responData.message}`);
+                    return;
+                }
+                if (!(responData.cekBol)) {
+                    alert(`Tidak bisa menambahkan karena status kendaraan: ${responData.message}`);
+                    return;
+                }
+                alert(`Data berhasil disimpan:\n Tipe Kendaraan: ${responData.tipe}\n Plat Nomor: ${responData.plat}`);
+            } catch(error) {
+                alert("Terjadi Kesalahan! Tidak dapat menghubungi server.");
+            }
+        }
+
+        button.addEventListener('click', () => {
+            const tipeKendaraan = document.getElementById("tipeKendaraan").value;
+            const gerbangMasuk = document.getElementById("gerbangMasuk").value;
+            const platKendaraan = document.getElementById("platKendaraan").value.trim();
+            let kendaraan = "";
+            if (tipeKendaraan == 1) {
+                kendaraan = "Kendaraan Roda Dua";
+            } else if (tipeKendaraan == 2) {
+                kendaraan = "Kendaraan Roda Empat";
+            } else if (tipeKendaraan == 3) {
+                kendaraan = "Kendaraan Roda Empat Keatas";
+            }
+
+            if (!tipeKendaraan) {
+                alert("Silakan pilih tipe kendaraan terlebih dahulu.");
+            } else if (tipeKendaraan == 3) {
+                alert(`Mohon maaf belum tersedia untuk ${kendaraan}`);
+            } else if (platKendaraan === "") {
+                alert("Plat nomor kendaraan tidak boleh kosong!");
+            } else {
+                if (tipeKendaraan == 1 && (gerbangMasuk == 1 || gerbangMasuk == 2)) {
+                    alert("Gerbang untuk kendaraan roda dua hanya Gerbang C!!");
+                    return;
+                }
+                if (tipeKendaraan == 2 && gerbangMasuk == 3) {
+                    alert("Gerbang C hanya untuk kendaraan roda 2!!");
+                    return;
+                }
+                const konfirmasi = confirm(`Apakah anda yakin plat "${platKendaraan}" sudah dimasukkan dengan benar?`);
+                const id = (plat) => {
+                    const waktu = new Date();
+                    const jam = waktu.getHours();
+                    const menit = waktu.getMinutes();
+                    const detik = waktu.getSeconds();
+                    const tanggal = waktu.getDate();
+                    const bulan = waktu.getMonth() + 1; 
+                    const tahun = waktu.getFullYear();
+                    const platEdit = plat.replaceAll(" ","-")
+                    return `${gerbangMasuk}_${tahun}-${bulan}-${tanggal}_${detik}:${menit}:${jam}_${platEdit}`;
+                };
+                if (konfirmasi) {
+                    const dataParkir = { 
+                        id: id(platKendaraan),
+                        kendaraan, 
+                        platKendaraan
+                    }
+                    kirimDataParkir(dataParkir);
+                } else {
+                    alert("Silakan masukkan kembali plat nomor yang benar.");
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>
+
+

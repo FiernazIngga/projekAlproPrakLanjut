@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Tickets | Affan Jaya Mall</title>
+<!-- <link rel="stylesheet" href="dasbord.css"> -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Spicy+Rice&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        #navbar {
+            width: 100%;
+            background-color: #0f0e17;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2em;
+            height: 5em;
+        }
+
+        #navbar h1 {
+            color: #fffffe;
+        }
+
+        .containerMenu ul {
+            display: flex;
+            gap: 2em;
+        }
+
+        .containerMenu ul li, .containerMenu ul li a{
+            list-style-type: none;
+            font-size: large;
+            color: #fffffe;
+            text-decoration: none;
+        }
+
+        .containerMenu ul li a:hover {
+            color: #f8f8f8;
+            border-bottom: 2px solid #fffffe;
+        }
+
+        .containerMenu ul li:nth-child(2) a {
+            border-bottom: 2px solid #fffffe;
+        }
+
+        .burgerNav {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        .hatas, .htengah, .hbawah {
+            width: 25px;
+            height: 3px;
+            background-color: #fffffe;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+
+        .burgerNav.active .hatas {
+            transform: rotate(50deg) translate(5px, 5px);
+        }
+        .burgerNav.active .htengah {
+            opacity: 0;
+        }
+        .burgerNav.active .hbawah {
+            transform: rotate(-50deg) translate(5px, -5px);
+        }
+
+        .containerMenu2 {
+            display: none;
+            width: 100%;
+            justify-content: center;
+            background-color: #0f0e17;
+            align-items: center;
+            text-align: center;
+            height: 0px;
+            overflow: hidden;
+            transition: all ease-in-out .5s;
+        }
+
+        .containerMenu2 ul li:nth-child(2) {
+            border-bottom: 2px solid white;
+        }
+
+        @media (max-width: 768px) {
+            .containerMenu {
+                display: none;
+            }
+            .burgerNav {
+                display: flex;
+            }
+            .containerMenu2 {
+                display: flex;
+            }
+            .containerMenu2 ul li, .containerMenu2 ul li a{
+                list-style-type: none;
+                font-size: large;
+                color: #fffffe;
+                margin: 1em;
+                text-decoration: none;
+            }
+            
+            .containerMenu2 ul li:hover {
+                color: #f8f8f8;
+                border-bottom: 2px solid #fffffe;
+            }
+        }
+
+        .isi {
+            width: 100%;
+            padding: 1em;
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+        }
+
+        .kaloGada {
+            display: none;
+            font-size: large;
+            color: red;
+        }
+
+        .containerPengumuman {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background-color: #fff;
+            margin-bottom: 1em;
+        }
+
+        .item {
+            display: flex;
+            padding: 1em;
+            border-bottom: 1px solid #eee;
+            align-items: flex-start;
+        }
+
+        .label {
+            width: 150px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .colon {
+            width: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .value {
+            flex: 1;
+            color: #555;
+        }
+
+        .judul {
+            background-color: #f5f5f5;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .semua {
+            display: none;
+        }  
+        a {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <section id="semua"> 
+        <div id="navbar">
+            <div class="containerH1">
+                <h1>Affan Jaya Mall</h1>
+            </div>
+            <div class="burgerNav" id="hamburgerMenu">
+                <div class="hatas"></div>
+                <div class="htengah"></div>
+                <div class="hbawah"></div>
+            </div>
+            <div class="containerMenu">
+                <ul>
+                    <li><a onclick="tiketKu()">Home</a></li>
+                    <li><a onclick="pengumumanKu()">Pengumuman</a></li>
+                    <li><a href="#">Lapor</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="containerMenu2">
+            <ul>
+                <li><a onclick="tiketKu()">Home</a></li>
+                <li><a onclick="pengumumanKu()">Pengumuman</a></li>
+                <li><a href="#">Lapor</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="isi">
+        <h1 class="kaloGada"></h1>
+    </section>         
+
+    <script>
+        const burger = document.querySelector('#hamburgerMenu');
+        const burgerJuga = document.querySelector('.burgerNav');
+        const containerMenu = document.querySelector('.containerMenu2');
+        const jPeng = document.querySelectorAll('.judul');
+        const tiketku = document.querySelector('.tiketku');
+
+        let active = false;
+        burger.addEventListener('click', () => {
+            active = !active;
+            active? burgerJuga.classList.add('active') : burgerJuga.classList.remove('active');
+            active? containerMenu.style.height = '15em' : containerMenu.style.height = '0em';
+        });
+
+        function tiketKu() {
+        const id = new URLSearchParams(window.location.search).get("id");
+            window.location.href = `/yourTickets?id=${id}`;
+        }
+
+        function pengumumanKu() {
+            const id = new URLSearchParams(window.location.search).get("id");
+            window.location.href = `/pengumumanUser?id=${id}`;
+        }
+
+        function lapor() {
+            const id = new URLSearchParams(window.location.search).get("id");
+            window.location.href = `/lapor?id=${id}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const isiPengumuman = document.querySelector('.isi');
+            fetch('/lihatPengumuman')
+            .then(respon => respon.json())
+            .then(peng => {
+                console.table(peng);
+                if (!peng.keteranganBol) {
+                    document.querySelector('.kaloGada').style.display = 'block';
+                    document.querySelector('.kaloGada').innerHTML = peng.message;
+                }
+                if (!peng.cekParameter) {
+                    document.querySelector('.kaloGada').style.display = 'block';
+                    document.querySelector('.kaloGada').innerHTML = peng.message;
+                }
+                peng.dataPengumuman.forEach(pengumuman => {
+                    const isi = document.createElement('div');
+                    let kontak2 = "";
+                    if (pengumuman.kontak2 == "") {
+                        kontak2 = "-";
+                    } else {
+                        kontak2 = pengumuman.kontak2;
+                    }
+                    if (pengumuman.publish && peng.keteranganBol) {
+                            isi.innerHTML = `
+                                    <div class="containerPengumuman">
+                                        <div class="judul item">
+                                            <span class="label">Judul Pengumuman</span>
+                                            <span class="colon">:</span>
+                                            <span class="value judul">${pengumuman.judul}</span>
+                                        </div>
+                                        <div class="semua">
+                                            <div class="item">
+                                                <span class="label">Isi Pengumuman</span>
+                                                <span class="colon">:</span>
+                                                <span class="value deskripsi">${pengumuman.deskripsi}</span>
+                                            </div>
+                                            <div class="item">
+                                                <span class="label">Lokasi</span>
+                                                <span class="colon">:</span>
+                                                <span class="value lokasi">${pengumuman.lokasi}</span>
+                                                </div>
+                                            <div class="item">
+                                                <span class="label">Kontak 1</span>
+                                                <span class="colon">:</span>
+                                                <span class="value kontak1">${pengumuman.kontak1}</span>
+                                            </div>
+                                            <div class="item">
+                                                <span class="label">Kontak 2</span>
+                                                <span class="colon">:</span>
+                                                <span class="value kontak2">${kontak2}</span>
+                                            </div>
+                                            <div class="item">
+                                                <span class="label">Waktu diunggah</span>
+                                                <span class="colon">:</span>
+                                                <span class="value kontak2">${pengumuman.waktuPublish}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                        `;
+                        isiPengumuman.appendChild(isi);
+                        const judul = isi.querySelector('.judul');
+                        const semua = isi.querySelector('.semua');
+                        let jpeng = false;
+                        judul.addEventListener('click', () => {
+                            const semua = judul.parentElement.querySelector('.semua');
+                            jpeng = !jpeng;
+                            jpeng? semua.style.display = 'block' : semua.style.display = 'none';  
+                        })
+                    } else {
+                        document.querySelector('.kaloGada').style.display = 'block';
+                        document.querySelector('.kaloGada').innerHTML = "Belum ada pengumuman";
+                    }
+                });
+            })
+
+        });    
+    </script>
+</body>
+</html>

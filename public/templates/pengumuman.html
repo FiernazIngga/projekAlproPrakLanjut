@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Spicy+Rice&display=swap');
+
+        * {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #dashboard {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .navbar {
+            width: 0%;
+            height: 100%;
+            background-color: #d1d1e9;
+            transition: ease-in-out 0.6s;
+            overflow: hidden;
+        }
+
+        .navbar.open {
+            width: 20%;
+        }
+
+        .hamburger {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1em;
+            cursor: pointer;
+        }
+
+        .affanDasbord {
+            color: #2b2c34;
+            white-space: nowrap;
+            padding: 1em;
+            font-size: 1.2em;
+            transition: all 0.5s;
+        }
+
+        .isi {
+            width: 100%;
+            height: 100%;
+        }
+
+        .burgerNav {
+            display: flex;
+            padding: 2px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            flex-direction: column;
+            width: 35px;
+            height: 35px;
+            margin: 10px;
+            cursor: pointer;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .hatas, .htengah, .hbawah {
+            width: 90%;
+            margin: 2.5px;
+            height: 3px;
+            background-color: #6246ea;
+            transition: all .3s;
+            transform-origin: left;
+        }
+
+        .burgerNav.active .hatas {
+            transform: rotate(33deg);
+            width: 100%;
+        }
+        .burgerNav.active .htengah {
+            opacity: 0;
+        }
+        .burgerNav.active .hbawah {
+            transform: rotate(-33deg);
+            width: 100%;
+        }
+
+        .menuParkir {
+            list-style: none;
+            padding: 0 1em;
+            display: block;
+        }
+
+        .menuParkir.show {
+            display: block;
+        }
+
+        .menuParkir li {
+            margin: 1em 0;
+        }
+
+        .menuParkir li:nth-child(5) a {
+            text-decoration: none;
+            color: #fffffe;
+            font-size: 1em;
+            display: block;
+            white-space: nowrap;
+            padding: 10px;
+            background-color: #6246ea;
+            border-radius: 5px;
+        }
+
+        .menuParkir li:not(:nth-child(5)) a {
+            text-decoration: none;
+            color: #2b2c34;
+            font-size: 1em;
+            display: block;
+            white-space: nowrap;
+            padding: 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .menuParkir li:not(:nth-child(5)) a:hover {
+            background: #6246ea;
+            color: #fffffe;
+        }
+
+        .menuPengumuman {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-top: 3em;
+        }
+
+        .formPengumuman {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: white;
+        }
+
+        .formPengumuman h2 {
+            margin-top: 0;
+            color: #333;
+            text-align: center;
+        }
+
+        .inputGroup {
+            margin-bottom: 15px;
+        }
+
+        .inputGroup label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .inputGroup input[type="text"],
+        .inputGroup textarea,
+        .inputGroup select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        .inputGroup textarea {
+            height: 80px;
+        }
+
+        .inputRow {
+            display: flex;
+            gap: 10px;
+        }
+
+        .inputRow .inputGroup {
+            flex: 1;
+        }
+
+        button[type="submit"] {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background: #45a049;
+        }
+
+        .tombolUtama, .tombolSekunder {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .tombolUtama {
+            background-color: #4e73df;
+            color: white;
+        }
+
+        .tombolUtama:hover {
+            background-color: #3a5bbf;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .tombolSekunder {
+            background-color: #f8f9fa;
+            color: #5a5c69;
+            border: 1px solid #d1d3e2;
+        }
+
+        .tombolSekunder:hover {
+            background-color: #e9ecef;
+            border-color: #b7b9cc;
+            transform: translateY(-2px);
+        }
+
+        .tombolUtama:active, .tombolSekunder:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+
+        .tombolUtama::before, .tombolSekunder::before {
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        @media screen and (max-width: 1424px) {
+            .navbar.open {
+                width: 500px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .textIsi h1 {
+                font-size: 1em;
+            }
+
+            .menuParkir a {
+                font-size: 0.9em;
+            }
+
+            .affanDasbord {
+                font-size: 1em;
+            }
+
+            .textIsi {
+                height: 10em;
+            }
+        }
+    </style>
+    <!-- <link rel="stylesheet" href="dasbord.css"> -->
+</head>
+<body>
+    <section id="dashboard">
+        <div class="navbar">
+            <h1 class="affanDasbord">Affan Jaya's Mall</h1>
+            <div class="isianDabsord">
+                <ul class="menuParkir">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/kendaraanMasuk">Kendaraan Masuk</a></li>
+                    <li><a href="/cekKendaraan">Cek Kendaraan</a></li>
+                    <li><a href="#">Kendaraan Keluar</a></li>
+                    <li><a href="/pengumuman">Menu Pengumuman</a></li>
+                    <li><a href="#">Keluar Program</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="isi">
+            <div class="burgerNav" id="hamburgerMenu">
+                <div class="hatas"></div>
+                <div class="htengah"></div>
+                <div class="hbawah"></div>
+            </div>
+            <div class="menuPengumuman">
+                <div class="menuButton">
+                    <button id="tombolPengumuman" class="tombolUtama" onclick="window.location.href='/pengumuman'">Isi Pengumuman</button>
+                    <button id="tombolIsi" class="tombolSekunder" onclick="window.location.href='/isiPengumuman'">Pengumuman</button>
+                </div>
+                <div class="formPengumuman">
+                    <h2>Buat Pengumuman Baru</h2>
+                    
+                    <form>
+                    <div class="inputGroup">
+                        <label>Judul Pengumuman</label>
+                        <input id="judulPengumuman" type="text" placeholder="Misal: Barang hilang">
+                    </div>
+                    
+                    <div class="inputGroup">
+                        <label>Deskripsi</label>
+                        <textarea rows="3" placeholder="Jelaskan detail pengumuman" id="deskripsi"></textarea>
+                    </div>
+                    
+                    <div class="inputGroup">
+                        <label>Lokasi</label>
+                        <input type="text" placeholder="Area parkir A1" id="lokasi">
+                    </div>
+                    
+                    <div class="inputRow">
+                        <div class="inputGroup">
+                        <label>Kontak 1</label>
+                        <input type="text" placeholder="No HP / Email Anda" id="kontak">
+                        </div>
+                        <div class="inputGroup">
+                        <label>Kontak 2 (opsional)</label>
+                        <input type="text" id="kontak2">
+                        </div>
+                    </div>
+                    
+                    <div class="inputGroup">
+                        <label>Prioritas</label>
+                        <select id="prioritas">
+                            <option value="" disabled selected>Pilih prioritas</option>
+                            <option value="1">Biasa</option>
+                            <option value="2">Penting</option>
+                            <option value="3">Darurat</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="publis">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const navbar = document.querySelector('.navbar');
+        const hamburger = document.querySelector('#hamburgerMenu');
+        const burgerNav = document.querySelector('.burgerNav');
+        const buttonPub = document.querySelector('#publis');
+        let tutup = 1;
+
+        hamburger.addEventListener('click', () => {
+            tutup = !tutup;
+            navbar.classList.toggle('open');
+            burgerNav.classList.toggle('active');
+        });
+
+        async function kirimData(dataPengumuman) {
+            let respon = await fetch('/dataPengumuman', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dataPengumuman)
+            })
+
+            const responServer = await respon.json();
+            if (responServer.cekBol) {
+                alert(responServer.message);
+            } else {
+                alert("Data tidak berhasil disimpan");
+            }
+        }
+
+        buttonPub.addEventListener('click', () => {
+            const judul = document.querySelector('#judulPengumuman').value;
+            const deskripsi = document.querySelector('#deskripsi').value;
+            const lokasi = document.querySelector('#lokasi').value;
+            const kontak = document.querySelector('#kontak').value;
+            const kontak2 = document.querySelector('#kontak2').value;
+            const prioritas = document.querySelector('#prioritas').value;
+            if (!judul || !deskripsi || !lokasi || !kontak || !prioritas) {
+                alert("Pastikan semua sudah terisi dengan benar!!");
+            } else {
+                let prio = "";
+                if (prioritas === "1") {
+                    prio = "Biasa";
+                } else if (prioritas === "2") {
+                    prio = "Penting";
+                } else {
+                    prio = "Darurat";
+                }
+                const confirmi = confirm("Apakah anda sudah yakin benar?");
+                if (confirmi) {
+                    const publish = confirm("Apakah anda ingin mempublish pengumuman juga?");
+                    let cekPublish;
+                    let awalSimpan = false;
+                    if (publish) {
+                        cekPublish = true;
+                        awalSimpan = true;
+                    } else {
+                        cekPublish = false;
+                        awalSimpan = false;
+                    }
+                    const dataPengumuman = {
+                        judul, deskripsi, lokasi, kontak, kontak2, prio, cekPublish, awalSimpan
+                    };
+                    kirimData(dataPengumuman);
+                }
+            }
+        })
+    </script>
+</body>
+</html>
+
+

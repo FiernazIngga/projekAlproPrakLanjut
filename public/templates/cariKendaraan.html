@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Kendaraan</title>
+    <!-- <link rel="stylesheet" href="dasbord.css"> -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Spicy+Rice&display=swap');
+
+        * {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #dashboard {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .navbar {
+            width: 0%;
+            height: 100%;
+            background-color: #d1d1e9;
+            transition: ease-in-out 0.6s;
+            overflow: hidden;
+        }
+
+        .navbar.open {
+            width: 20%;
+        }
+
+        .hamburger {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1em;
+            cursor: pointer;
+        }
+
+        .affanDasbord {
+            color: #2b2c34;
+            white-space: nowrap;
+            padding: 1em;
+            font-size: 1.2em;
+            transition: all 0.5s;
+        }
+
+        .isi {
+            width: 100%;
+            height: 100%;
+        }
+
+        .burgerNav {
+            display: flex;
+            padding: 2px;;
+            border-radius: 5px;
+            flex-direction: column;
+            width: 35px;
+            height: 35px;
+            margin: 10px;
+            cursor: pointer;
+            box-sizing: border-box;
+            left: 0;
+        }
+
+        .hatas, .htengah, .hbawah {
+            width: 90%;
+            margin: 2.5px;
+            height: 3px;
+            background-color: #6246ea;
+            transition: all .3s;
+            transform-origin: left;
+        }
+
+        .burgerNav.active .hatas {
+            transform: rotate(33deg);
+            width: 100%;
+        }
+        .burgerNav.active .htengah {
+            opacity: 0;
+        }
+        .burgerNav.active .hbawah {
+            transform: rotate(-33deg);
+            width: 100%;
+        }
+
+        .menuParkir {
+            list-style: none;
+            padding: 0 1em;
+            display: block;
+        }
+
+        .menuParkir.show {
+            display: block;
+        }
+
+        .menuParkir li {
+            margin: 1em 0;
+        }
+
+        .menuParkir li:nth-child(3) a {
+            text-decoration: none;
+            color: #fffffe;
+            font-size: 1em;
+            display: block;
+            white-space: nowrap;
+            padding: 10px;
+            background-color: #6246ea;
+            border-radius: 5px;
+        }
+
+        .menuParkir li:not(:nth-child(3)) a {
+            text-decoration: none;
+            color: #2b2c34;
+            font-size: 1em;
+            display: block;
+            white-space: nowrap;
+            padding: 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .menuParkir li:not(:nth-child(3)) a:hover {
+            background: #6246ea;
+            color: #fffffe;
+        }
+
+        .isi h1 {
+            text-align: center;
+            margin-top: 2em;
+        }
+
+        .containerIsi {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .containerIsi button:nth-child(2){
+            margin: 2em 5em;
+            width: 13em;
+            height: 3em;
+            border-radius: 5px;
+            background-color: #6246ea;
+            border: 2px solid #6246ea;
+            color: #fffffe;
+            font-weight: 500;
+        }
+
+        .containerIsi button:nth-child(1) {
+            margin: 2em 5em;
+            width: 13em;
+            height: 3em;
+            border-radius: 5px;
+            background-color: transparent;
+            border: 2px solid #6246ea;
+            color: #6246ea;
+            font-weight: 500;
+            transition: all 0.5s;
+        }
+
+        .containerIsi button:nth-child(1):hover, .containerIsi button:nth-child(2):hover {
+            background-color: #6246ea;
+            cursor: pointer;
+            color: #fffffe;
+        }
+        .containerIsi button:nth-child(1):focus, .containerIsi button:nth-child(2):focus {
+            background-color: #6246ea;
+            color: #fffffe;
+        }
+
+        .isiisi {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .isiCari {
+            border: 1px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            width: 80%;
+            background-color: #16161a;
+            padding: 2em;
+            border-radius: 10px;
+        }
+
+        .isiCari form {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pencarian {
+            display: flex;
+            align-items: center;
+        }
+
+        .isiPlat {
+            display: flex;
+            flex-direction: column;
+            margin-right: 3em;
+        }
+
+        .isiPlat label {
+            color: #fffffe;
+            font-weight: 700;
+        }
+
+        .isiPlat input {
+            margin: 5px 0;
+            border-radius: 10px;
+            height: 3em;
+            text-align: center;
+            border: 2px solid #7f5af0;
+            color: #fffffe;
+            background-color: #16161a;
+        }
+
+        .isiPlat input::placeholder, .isiPlat input::selection {
+            text-align: center;
+            color: #fffffe;
+        }
+
+        .pencarian button {
+            width: 8em;
+            height: 3em;
+            border-radius: 5px;
+            border: 1.5px solid #0e172c;
+            background-color: #7f5af0;
+            color: #fffffe;
+            transition: all .1s ease-in-out;
+            cursor: pointer;
+        }
+
+        .pencarian button:hover {
+            background-color: #8e6eee;
+        }
+
+        .initable {
+            margin-top: 1em;
+            margin-bottom: 2em;
+            border: 2px solid #fffffe;
+            border-radius: 5px;
+            width: 90%;
+            overflow: hidden;
+            display: none;
+        }
+
+        .initable table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .initable tr {
+            border-bottom: 1px solid #fffffe;
+        }
+
+        .initable tr:last-child {
+            border-bottom: none;
+        }
+
+        .initable td {
+            padding: 12px 15px;
+            color: #fffffe;
+        }
+
+        .iniTH {
+            text-align: left;
+            font-weight: bold;
+            background-color: #7f5af0;
+            color: #fffffe;
+            padding: 10px;
+            width: 35%;
+        }
+
+        .textKeteranganKendaraan {
+            display: none;
+            color: #fffffe;
+            font-weight: 600;
+            font-size: 1.3em;
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                width: 90%;
+                padding: 1.5em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+
+
+        @media screen and (max-width: 1424px) {
+            .navbar.open {
+                width: 500px;
+            }
+        }
+
+        @media screen and (max-width: 808px) {
+            .textIsi h1 {
+                font-size: 1em;
+            }
+
+            .menuParkir a {
+                font-size: 0.9em;
+            }
+
+            .affanDasbord {
+                font-size: 1em;
+            }
+
+            .textIsi {
+                height: 10em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section id="dashboard">
+        <div class="navbar">
+            <h1 class="affanDasbord">Affan Jaya's Mall</h1>
+            <div class="isianDabsord">
+                <ul class="menuParkir">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/kendaraanMasuk">Kendaraan Masuk</a></li>
+                    <li><a href="/cekKendaraan">Cek Kendaraan</a></li>
+                    <li><a href="#">Kendaraan Keluar</a></li>
+                    <li><a href="/pengumuman">Menu Pengumuman</a></li>
+                    <li><a href="#">Keluar Program</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="isi">
+            <div class="burgerNav" id="hamburgerMenu">
+                <div class="hatas"></div>
+                <div class="htengah"></div>
+                <div class="hbawah"></div>
+            </div>
+
+            <div class="isiisi">
+                <h1>Cek Kendaraan</h1>
+                <div class="containerIsi">
+                    <div class="containerButton">
+                        <button type="button" id="cekSemmua" onclick="window.location.href='/cekKendaraan'">Lihat Semua</button>
+                        <button type="button" id="cariKendaraan" onclick="window.location.href='/cariKendaraan'">Cari Kendaraan</button>
+                    </div>
+                </div>
+
+                <div class="isiCari">
+                    <form method="post">
+                        <div class="pencarian">
+                            <div class="isiPlat">
+                                <label for="plat">Plat Kendaraan:</label>
+                                <input type="text" name="plat" id="plat"  required placeholder="Cth: AB 123 CD">
+                            </div>
+                            <button type="button" id="iniButtonCari">Cari</button>
+                        </div>
+                        <div class="textKeteranganKendaraan"></div>
+                        <div class="initable">
+                            <table>
+                                <tr>
+                                    <td class="iniTH">Tipe Kendaraan</td>
+                                    <td id="tipe">Tipe Kosong</td>
+                                </tr>
+                                <tr>
+                                    <td class="iniTH">Plat Kendaraan</td>
+                                    <td id="platTabel">Plat Kosong</td>
+                                </tr>
+                                <tr>
+                                    <td class="iniTH">Biaya Parkir</td>
+                                    <td id="biaya">Biaya Kosong</td>
+                                </tr>
+                                <tr>
+                                    <td class="iniTH">Denda Parkir</td>
+                                    <td id="denda">Denda Kosong</td>
+                                </tr>
+                                <tr>
+                                    <td class="iniTH">Waktu Masuk</td>
+                                    <td id="waktuMsk">Waktu Kosong</td>
+                                </tr>
+                                <tr>
+                                    <td class="iniTH">Waktu Keluar</td>
+                                    <td id="waktuKlr">Waktu Kosong</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const navbar = document.querySelector('.navbar');
+        const hamburger = document.querySelector('#hamburgerMenu');
+        const burgerNav = document.querySelector('.burgerNav');
+        const button = document.querySelector('#button');
+        const buttoncari = document.querySelector('#iniButtonCari');
+        let tutup = 1;
+
+        hamburger.addEventListener('click', () => {
+            tutup = !tutup;
+            navbar.classList.toggle('open');
+            burgerNav.classList.toggle('active');
+        });
+
+        buttoncari.addEventListener('click', () => {
+            const plat = document.querySelector('#plat').value.trim();
+            if (!plat) {
+                alert("Masukkan plat terlebih dahulu");
+                return;
+            }
+            fetch('/cariKendaraanAksi', {
+                method: 'POST',
+                headers: {
+                    'Content-Type' : 'application/json',
+                },
+                body: JSON.stringify({'platKendaraan' : plat})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === "Kendaraan tidak ditemukan" || data.message == "Kosong belum ada kendaraan terpakir") {
+                    document.querySelector('.textKeteranganKendaraan').style.display = 'block';
+                    document.querySelector('.textKeteranganKendaraan').textContent = data.message;
+                    document.querySelector('.initable').style.display = 'none';
+                } else {
+                    console.log("Ini data :", data.data)
+                    document.querySelector('.textKeteranganKendaraan').style.display = 'none';
+                    document.querySelector('.initable').style.display = 'block';
+                    document.querySelector('#tipe').textContent = data.data.tipe;
+                    document.querySelector('#platTabel').textContent = data.data.plat;
+                    document.querySelector('#biaya').textContent = data.data.biaya;
+                    document.querySelector('#denda').textContent = data.data.denda;
+                    document.querySelector('#waktuMsk').textContent = data.data.waktuMsk;
+                    document.querySelector('#waktuKlr').textContent = data.data.waktuKlr;
+                }
+            })
+            .catch(error => console.error("Error:", error));
+            });
+    </script>
+</body>
+</html>
+
+

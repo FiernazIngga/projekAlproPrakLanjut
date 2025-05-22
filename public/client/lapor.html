@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Tickets | Affan Jaya Mall</title>
+    <!-- <link rel="stylesheet" href="dasbord.css"> -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Spicy+Rice&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        #semua {
+            top: 0;
+            position: sticky;
+        }
+
+        #navbar {
+            width: 100%;
+            background-color: #0f0e17;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2em;
+            height: 5em;
+        }
+
+        #navbar h1 {
+            color: #fffffe;
+        }
+
+        .containerMenu ul {
+            display: flex;
+            gap: 2em;
+        }
+
+        .containerMenu ul li, .containerMenu ul li a{
+            list-style-type: none;
+            font-size: large;
+            color: #fffffe;
+            text-decoration: none;
+        }
+
+        .containerMenu ul li a:hover {
+            color: #f8f8f8;
+            border-bottom: 2px solid #fffffe;
+        }
+
+        .containerMenu ul li:nth-child(3) a {
+            border-bottom: 2px solid #fffffe;
+        }
+
+        .burgerNav {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        .hatas, .htengah, .hbawah {
+            width: 25px;
+            height: 3px;
+            background-color: #fffffe;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+
+        .burgerNav.active .hatas {
+            transform: rotate(50deg) translate(5px, 5px);
+        }
+        .burgerNav.active .htengah {
+            opacity: 0;
+        }
+        .burgerNav.active .hbawah {
+            transform: rotate(-50deg) translate(5px, -5px);
+        }
+
+        .containerMenu2 {
+            display: none;
+            width: 100%;
+            justify-content: center;
+            background-color: #0f0e17;
+            align-items: center;
+            text-align: center;
+            height: 0px;
+            overflow: hidden;
+            transition: all ease-in-out .5s;
+        }
+
+        .containerMenu2 ul li:nth-child(3) {
+            border-bottom: 2px solid white;
+        }
+
+        @media (max-width: 768px) {
+            .containerMenu {
+                display: none;
+            }
+            .burgerNav {
+                display: flex;
+            }
+            .containerMenu2 {
+                display: flex;
+            }
+            .containerMenu2 ul li, .containerMenu2 ul li a{
+                list-style-type: none;
+                font-size: large;
+                color: #fffffe;
+                margin: 1em;
+                text-decoration: none;
+            }
+            
+            .containerMenu2 ul li:hover {
+                color: #f8f8f8;
+                border-bottom: 2px solid #fffffe;
+            }
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+        .isi {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .isiform {
+            height: 100%;
+        }
+
+        form {
+            background-color: #f3f1f1;
+            padding: 20px 25px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .beritahuPelanggan {
+            color: red;
+            font-size: 13px;
+            margin-bottom: 1em;
+            text-align: center;
+        }
+
+        .inputGroup {
+            margin-bottom: 15px;
+        }
+
+        .inputGroup label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: normal;
+        }
+
+        .inputGroup input,
+        .inputGroup textarea,
+        .inputGroup select {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .inputKontak {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .inputKontak .inputGroup {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        form button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <section id="semua"> 
+        <div id="navbar">
+            <div class="containerH1">
+                <h1>Affan Jaya Mall</h1>
+            </div>
+            <div class="burgerNav" id="hamburgerMenu">
+                <div class="hatas"></div>
+                <div class="htengah"></div>
+                <div class="hbawah"></div>
+            </div>
+            <div class="containerMenu">
+                <ul>
+                    <li><a onclick="tiketKu()">Home</a></li>
+                    <li><a onclick="pengumumanKu()">Pengumuman</a></li>
+                    <li><a onclick="lapor()">Lapor</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="containerMenu2">
+            <ul>
+                <li><a onclick="tiketKu()">Home</a></li>
+                <li><a onclick="pengumumanKu()">Pengumuman</a></li>
+                <li><a onclick="lapor()">Lapor</a></li>
+            </ul>
+        </div>
+    </section>
+    
+    <section class="isi">
+        <div class="isiform">
+            <form>
+                <p class="beritahuPelanggan">Pelaporan dibawah digunakan untuk anda apabila menemukan atau membutuhkan sesuatu yang darurat didalam Mall</p>
+                <div class="inputGroup">
+                    <label for="judulLapor">Judul Laporan</label>
+                    <input type="text" id="judulLapor" placeholder="Isi Judul Pelaporan">
+                </div>
+                <div class="inputGroup">
+                    <label for="deskripsiLapor">Deskripsi Laporan</label>
+                    <textarea rows="3" id="deskripsiLapor" placeholder="Isi Keterangan"></textarea>
+                </div>
+                <div class="inputGroup">
+                    <label for="lokasi">Lokasi</label>
+                    <input type="text" id="lokasiLapor" placeholder="Isi Lokasi Anda"></input>
+                </div>
+                <div class="inputGroup" id="kontakGroup">
+                    <label for="kontak">Kontak</label>
+                    <input type="text" id="kontak" placeholder="No HP / Email Anda / Kosongi Untuk Anonim">
+                </div>
+                <div class="inputGroup">
+                    <label>Prioritas</label>
+                    <select id="prioritas">
+                        <option value="" disabled selected>Pilih prioritas</option>
+                        <option value="Biasa">Biasa</option>
+                        <option value="Penting">Penting</option>
+                        <option value="Darurat">Darurat</option>
+                    </select>
+                </div>            
+                <button type="submit" id="kirimLaporan">Kirim Laporan</button>
+            </form>
+        </div>
+    </section>         
+
+    <script>
+        const burger = document.querySelector('#hamburgerMenu');
+        const burgerJuga = document.querySelector('.burgerNav');
+        const containerMenu = document.querySelector('.containerMenu2');
+        const jPeng = document.querySelectorAll('.judul');
+        const laporKirim = document.querySelector('#kirimLaporan');
+
+        let active = false;
+        burger.addEventListener('click', () => {
+            active = !active;
+            active? burgerJuga.classList.add('active') : burgerJuga.classList.remove('active');
+            active? containerMenu.style.height = '15em' : containerMenu.style.height = '0em';
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const id = new URLSearchParams(window.location.search).get("id");
+            console.log(id);
+            console.log("ini id nya ",encodeURIComponent(id));
+            fetch(`/lihatKendaraanPribadi/${id}`)
+            .then(response => response.json())
+            .then(resp => {
+                console.log(resp)
+                if (!resp.cekBol) {
+                    window.location.href = `/kendaraanTidakDitemukan`;
+                    return;
+                }
+            });
+        });
+
+        function tiketKu() {
+            const id = new URLSearchParams(window.location.search).get("id");
+            window.location.href = `/yourTickets?id=${id}`;
+        }
+
+        function pengumumanKu() {
+            const id = new URLSearchParams(window.location.search).get("id");
+            window.location.href = `/pengumumanUser?id=${id}`;
+        }
+
+        function lapor() {
+            const id = new URLSearchParams(window.location.search).get("id");
+            window.location.href = `/lapor?id=${id}`;
+        }
+
+        async function kirimData(dataLapor) {
+            try {
+                let response = await fetch('/laporPribadi', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(dataLapor)
+                })
+
+                const responLaporan = await response.json();
+                if (responLaporan.bool) {
+                    console.log(dataLapor);
+                    alert(`${responLaporan.message}`)
+                    return;
+                } else {
+                    alert(`${responLaporan.message}`)
+                    return;
+                }
+            } catch (error) {
+                console.log(dataLapor);
+                alert("Terjadi kesalahan dalam mengirimkan laporan silahkan ulangi!");
+            }
+        }
+
+        laporKirim.addEventListener('click', () => {
+            event.preventDefault();
+            const judulLapor = document.querySelector('#judulLapor').value;
+            const deskripsiLapor = document.querySelector('#deskripsiLapor').value;
+            const kontak = document.querySelector('#kontak').value;
+            const prioritasLapor = document.querySelector('#prioritas').value;
+            const lokasiLapor = document.querySelector('#lokasiLapor').value;
+            if (!judulLapor || !deskripsiLapor || !prioritasLapor || !lokasiLapor) {
+                alert("Pastikan Judul Laporan, Deskripsi, Lokasi, dan Prioritas sudah terisi");
+                return;
+            }
+            let kontakLapor;
+            if (!kontak) {
+                kontakLapor = "-";
+            } else {
+                kontakLapor = kontak;
+            }
+            const konfirmasi = confirm(`Apakah anda yakin laporan sudah dimasukkan dengan benar?`);
+            const id = () => {
+                const id = new URLSearchParams(window.location.search).get("id");
+                const waktu = new Date();
+                const jam = waktu.getHours();
+                const menit = waktu.getMinutes();
+                const detik = waktu.getSeconds();
+                const milidetik = waktu.getMilliseconds();
+                const tanggal = waktu.getDate();
+                const bulan = waktu.getMonth() + 1; 
+                const tahun = waktu.getFullYear();
+                const randomDesimal = Math.random();
+                return `idPelapor_${id}_LALU_laporanPribadiPada_${tahun}-${bulan}-${tanggal}_${detik}-${menit}-${jam}-${milidetik}_${randomDesimal}`;
+            };
+            if (konfirmasi) {
+                const dataLapor = { 
+                    idLapor: id(),
+                    judulLapor, 
+                    deskripsiLapor,
+                    kontakLapor,
+                    prioritasLapor,
+                    lokasiLapor
+                }
+                kirimData(dataLapor).then(()=>{
+                    window.location.reload();
+                });
+            } else {
+                alert("Silakan masukkan kembali laporan yang benar.");
+                return;
+            }
+        })
+    </script>
+</body>
+</html>

@@ -199,7 +199,7 @@
                 <ul>
                     <li><a onclick="tiketKu()">Home</a></li>
                     <li><a onclick="pengumumanKu()">Pengumuman</a></li>
-                    <li><a href="#">Lapor</a></li>
+                    <li><a onclick="lapor()">Lapor</a></li>
                 </ul>
             </div>
         </div>
@@ -207,13 +207,12 @@
             <ul>
                 <li><a onclick="tiketKu()">Home</a></li>
                 <li><a onclick="pengumumanKu()">Pengumuman</a></li>
-                <li><a href="#">Lapor</a></li>
+                <li><a onclick="lapor()">Lapor</a></li>
             </ul>
         </div>
     </section>
 
     <section class="isi">
-        <h1 class="kaloGada"></h1>
     </section>         
 
     <script>
@@ -228,6 +227,21 @@
             active = !active;
             active? burgerJuga.classList.add('active') : burgerJuga.classList.remove('active');
             active? containerMenu.style.height = '15em' : containerMenu.style.height = '0em';
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const id = new URLSearchParams(window.location.search).get("id");
+            console.log(id);
+            console.log("ini id nya ",encodeURIComponent(id));
+            fetch(`/lihatKendaraanPribadi/${id}`)
+            .then(response => response.json())
+            .then(resp => {
+                console.log(resp)
+                if (!resp.cekBol) {
+                    window.location.href = `/kendaraanTidakDitemukan`;
+                    return;
+                }
+            });
         });
 
         function tiketKu() {
@@ -251,15 +265,6 @@
             fetch('/lihatPengumuman')
             .then(respon => respon.json())
             .then(peng => {
-                console.table(peng);
-                if (!peng.keteranganBol) {
-                    document.querySelector('.kaloGada').style.display = 'block';
-                    document.querySelector('.kaloGada').innerHTML = peng.message;
-                }
-                if (!peng.cekParameter) {
-                    document.querySelector('.kaloGada').style.display = 'block';
-                    document.querySelector('.kaloGada').innerHTML = peng.message;
-                }
                 peng.dataPengumuman.forEach(pengumuman => {
                     const isi = document.createElement('div');
                     let kontak2 = "";
@@ -314,9 +319,6 @@
                             jpeng = !jpeng;
                             jpeng? semua.style.display = 'block' : semua.style.display = 'none';  
                         })
-                    } else {
-                        document.querySelector('.kaloGada').style.display = 'block';
-                        document.querySelector('.kaloGada').innerHTML = "Belum ada pengumuman";
                     }
                 });
             })

@@ -296,9 +296,10 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="/kendaraanMasuk">Kendaraan Masuk</a></li>
                     <li><a href="/cekKendaraan">Cek Kendaraan</a></li>
-                    <li><a href="#">Kendaraan Keluar</a></li>
+                    <li><a href="/kendaraanKeluar">Kendaraan Keluar</a></li>
+                    <li><a href="/riwayatKendaraanKeluar">Riwayat Kendaraan</a></li>
                     <li><a href="/pengumuman">Menu Pengumuman</a></li>
-                    <li><a href="#">Keluar Program</a></li>
+                    <li><a href="/pengumumanLaporPengguna">Pengumuman User</a></li>
                 </ul>
             </div>
         </div>
@@ -321,7 +322,7 @@
                                 <th>Prioritas</th>
                                 <th>Waktu Posting</th>
                                 <th>Keterangan</th>
-                                <th>Edit</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="data-pengumuman">
@@ -364,31 +365,33 @@
                         return;
                     }
                     respon.dataPengumuman.forEach(isi => {
-                        const row = document.createElement('tr');
-                        let isiPrioritas = "";
-                        let warnaTombol = "";
-                        let infoPublish = "";
-                        if (isi.publish) {
-                            isiPrioritas = "unPublish";
-                            warnaTombol = '#4e73df';
-                            infoPublish = "unpublifikasi";
-                            
-                        } else {
-                            infoPublish = "publifikasi";
-                            isiPrioritas = "Publish";
-                            warnaTombol = 'crimson';
+                        let id = isi.noPengumuman.toString();
+                        if (!id.includes("LALU")) {
+                            const row = document.createElement('tr');
+                            let isiPrioritas = "";
+                            let warnaTombol = "";
+                            let infoPublish = "";
+                            if (isi.publish) {
+                                isiPrioritas = "unPublish";
+                                warnaTombol = '#4e73df';
+                                infoPublish = "unpublifikasi";
+                                
+                            } else {
+                                infoPublish = "publifikasi";
+                                isiPrioritas = "Publish";
+                                warnaTombol = 'crimson';
+                            }
+                            judul = (isi.judul).substring(0, 20);
+                            row.innerHTML = `
+                                <td>${judul + "....."}</td>
+                                <td>${isi.lokasi}</td>
+                                <td>${isi.prioritas}</td>
+                                <td>${isi.waktuPublish}</td>
+                                <td><button class="buttonPublish" type="button" data-aksi='${infoPublish}' data-id='${isi.noPengumuman}' style="background-color: ${warnaTombol};">${isiPrioritas}</button></td>
+                                <td><button type="button" class="iniEdit" onclick="window.location.href='/editPengumuman?id=${isi.noPengumuman}'">Edit</button> | <button type="button" class="iniHapus" data-url="/hapusData/${isi.noPengumuman}">Hapus</button></td>
+                            `
+                            bodyPengumuman.appendChild(row);
                         }
-                        judul = (isi.judul).substring(0, 20);
-                        row.innerHTML = `
-                            <td>${judul + "....."}</td>
-                            <td>${isi.lokasi}</td>
-                            <td>${isi.prioritas}</td>
-                            <td>${isi.waktuPublish}</td>
-                            <td><button class="buttonPublish" type="button" data-aksi='${infoPublish}' data-id='${isi.noPengumuman}' style="background-color: ${warnaTombol};">${isiPrioritas}</button></td>
-                            <td><button type="button" class="iniEdit" onclick="window.location.href='/editPengumuman?id=${isi.noPengumuman}'">Edit</button> | <button type="button" class="iniHapus" data-url="/hapusData/${isi.noPengumuman}">Hapus</button></td>
-                        `
-                        bodyPengumuman.appendChild(row);
-
                     });
 
                     // Ini hapus data

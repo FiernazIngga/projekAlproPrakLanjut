@@ -1,6 +1,30 @@
 {
     "files.associations": {
         "xstring": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "atomic": "cpp",
+        "memory": "cpp",
+        "fstream": "cpp",
+        "ostream": "cpp",
+        "string": "cpp",
+        "any": "cpp",
+        "array": "cpp",
+        "compare": "cpp",
+        "format": "cpp",
+        "functional": "cpp",
+        "future": "cpp",
+        "ratio": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp",
+        "variant": "cpp",
+        "xmemory": "cpp",
+        "xtr1common": "cpp",
+        "xutility": "cpp",
+        "xiosbase": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "vector": "cpp",
+        "iosfwd": "cpp"
     }
 }

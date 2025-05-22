@@ -229,9 +229,10 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="/kendaraanMasuk">Kendaraan Masuk</a></li>
                     <li><a href="/cekKendaraan">Cek Kendaraan</a></li>
-                    <li><a href="#">Kendaraan Keluar</a></li>
+                    <li><a href="/kendaraanKeluar">Kendaraan Keluar</a></li>
+                    <li><a href="/riwayatKendaraanKeluar">Riwayat Kendaraan</a></li>
                     <li><a href="/pengumuman">Menu Pengumuman</a></li>
-                    <li><a href="#">Keluar Program</a></li>
+                    <li><a href="/pengumumanLaporPengguna">Pengumuman User</a></li>
                 </ul>
             </div>
         </div>
@@ -299,7 +300,7 @@
                     return;
                 }
                 if (!(responData.cekBol)) {
-                    alert(`Tidak bisa menambahkan karena status kendaraan: ${responData.message}`);
+                    alert(`${responData.message}`);
                     return;
                 }
                 alert(`Data berhasil disimpan:\n Tipe Kendaraan: ${responData.tipe}\n Plat Nomor: ${responData.plat}`);
